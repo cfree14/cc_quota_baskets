@@ -41,4 +41,12 @@ freeR::check_names(data$sci_name)
 # Get FL life history data
 data_lh <- freeR::fishlife(species = data$sci_name)
 
+# Add common name
+data_lh1 <- data_lh %>% 
+  left_join(data, by=c("sci_name")) %>% 
+  select(region, sci_name, comm_name, comm_name_foreign, everything())
+
+# Export
+write.csv(data_lh1, file=file.path(outdir, "karr_cuba_fish_life_history.csv"), row.names = F)
+
 
